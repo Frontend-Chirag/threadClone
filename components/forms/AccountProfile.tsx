@@ -122,14 +122,18 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
               <FormLabel className='account-form_image-label'>
                 { field.value 
                  ? (
+                   <div className=" w-[100px] h-[100px] 
+                   flex justify-center items-center 
+                   overflow-hidden rounded-full">
                      <Image 
                        src={field.value}
                        alt="profile photo"
-                       width={96}
-                       height={96}
+                       width={100}
+                       height={100}
                        priority
-                       className="rounded-full object-contain"
-                     />   
+                       className=" object-cover "
+                       />   
+                      </div>
                    )
                  : (
                     <div className="relative w-full h-fit flex-col text-3xl flex justify-center items-center">
@@ -139,10 +143,11 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                     width={48}
                     height={48}
                     priority
-                    className="rounded-full object-contain cursor-pointer"
+                    className="rounded-full object-cover cursor-pointer"
                     onClick={handleRef}
                     />   
-                      <p className="text-white absolute right-2 top-full cursor-pointer" onClick={handleRef}>+</p>
+                      <p className="text-white absolute right-2 top-full cursor-pointer" 
+                      onClick={handleRef}>+</p>
                     </div>
                    )
                 }

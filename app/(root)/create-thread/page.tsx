@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 async function Page() {
  
     const user = await currentUser();
+    console.log(user)
 
     if(!user) return null;
 
