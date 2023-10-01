@@ -6,6 +6,7 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 
 
 const Page = async ({ params }: {params: { id:string }}) => {

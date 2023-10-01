@@ -18,7 +18,11 @@ async function Page() {
     return (
      <>
       <h1 className="head-text">Create Thread</h1>
-      <PostThread userId={userInfo._id}/>
+      <PostThread 
+       userId={userInfo._id}
+       username={userInfo.username}
+       imgUrl={userInfo.image}
+       />
      </>
 )
 
