@@ -25,9 +25,10 @@ const page = async () => {
  
   return (
     <section>
-        <h1 className='head-text mb-10'>Create Communities</h1>
+        <h1 className='head-text  mb-10'>Create Communities</h1>
        
-       <div className='w-full flex mt-12 border-left  py-6 px-4 justify-between items-start'>
+       <div className='w-full flex mt-12 border-left sm:gap-0 gap-10
+       sm:flex-row flex-col py-6 px-4 justify-between items-start'>
         <OrganizationSwitcher
               appearance={{
                 baseTheme: dark,

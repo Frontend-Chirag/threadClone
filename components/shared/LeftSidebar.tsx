@@ -38,7 +38,7 @@ function LeftSidebar() {
                    <Link 
                     href={link.route}
                     key={link.label}
-                     className={`leftsidebar_link ${isActive && 'bg-primary-500'}`}
+                     className={`leftsidebar_link ${isActive && 'bg-neutral-900'}`}
                     >
                         <Image
                           src={link.imgURL}

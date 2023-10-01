@@ -6,7 +6,6 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { useAuth } from "@clerk/nextjs";
 
 
 const Page = async ({ params }: {params: { id:string }}) => {
@@ -34,7 +33,7 @@ const Page = async ({ params }: {params: { id:string }}) => {
               <Tabs defaultValue="threads" className="w-full">
                  <TabsList className="tab">
                     {profileTabs.map((tab) => (
-                        <TabsTrigger key={tab.label} value={tab.value} className="tab">
+                        <TabsTrigger key={tab.label} value={tab.value} className="tab2">
                             <Image
                               src={tab.icon}
                               alt={tab.label}
@@ -44,7 +43,8 @@ const Page = async ({ params }: {params: { id:string }}) => {
                             />
                             <p className="max-sm:hidden">{tab.label}</p>
                             {tab.label === 'Threads' && (
-                                <p className="ml-1 rounded-sm bg-light-4 px-2 py-2 !text-tiny-medium text-light-2">
+                                <p className="ml-1 rounded-sm bg-light-4 
+                                px-2 py-2 !text-tiny-medium text-light-2">
                                    {userInfo?.threads?.length}
                                 </p>
                             )}

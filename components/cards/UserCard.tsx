@@ -17,15 +17,17 @@ const UserCard = ({ id, name, username, imgUrl, personType }: Props) => {
     const router = useRouter();
 
   return (
-    <article className="user-card">
-       <div className='user-card_avatar'>
+    <article className="user-card mt-5">
+       <div className='user-card_avatar '>
+         <div className="flex justify-center items-center w-[48px] h-[48px] overflow-hidden rounded-full">
           <Image
            src={imgUrl}
            alt='logo'
            width={48}
            height={48}
-           className='rounded-full'
-          />
+           className='object-cover'
+           />
+         </div>
 
           <div className="flex-1 text-ellipsis">
              <h4 className="text-base-semibold text-light-1">{name}</h4>

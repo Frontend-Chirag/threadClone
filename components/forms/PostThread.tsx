@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname, useRouter } from "next/navigation";
 import * as z from "zod";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { ThreadValidation } from "@/lib/validation/thread";
 import { createThread } from "@/lib/actions/thread.action";
@@ -61,27 +61,27 @@ function PostThread({ userId , username, imgUrl }: Props ){
           render={({ field }) => (
               <FormItem className="mt-10 flex flex-1 relative items-start gap-3 w-full">
                <div className='flex flex-col items-center '>
-                <div className="w-[80px] h-[80px] flex justify-center items-center rounded-full overflow-hidden">
+                <div className="sm:w-[80px] sm:h-[80px] w-[60px] h-[60px] flex justify-center items-center rounded-full overflow-hidden">
                      <Image
                       src={imgUrl}
                       alt="Profile image"
                       width={80}
                       height={80}
-                      className=" !w-[80px] object-cover !h-[80px] "
+                      className=" sm:w-[80px] sm:h-[80px] w-[60px] h-[60px] object-cover"
                      />
                 </div>
                     <div className='Post-thread-card_bar'/>
-                    <div className="w-[30px] h-[30px] flex opacity-[0.5] justify-center items-center rounded-full overflow-hidden">
+                    <div className="sm:w-[40px] sm:h-[40px] w-[30px] h-[30px] flex opacity-[0.5] justify-center items-center rounded-full overflow-hidden">
                      <Image
                       src={imgUrl}
                       alt="Profile image"
-                      width={30}
-                      height={30}
-                      className=" !w-[30px] object-cover !h-[30px] "
+                      width={40}
+                      height={40}
+                      className="object-cover sm:w-[40px] sm:h-[40px] w-[30px] h-[30px]  "
                      />
                    </div>
                 </div>
-                      <p className="text-neutral-800 absolute bottom-1 left-[70px] flex">
+                      <p className="text-neutral-800 absolute bottom-1 sm:left-[90px] left-[70px] flex">
                         Add a thread
                       </p>
                 <section className="flex flex-col w-full gap-2">

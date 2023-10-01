@@ -5,7 +5,8 @@
 @layer components {
   /* main */
   .main-container {
-    @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
+    @apply flex min-h-screen flex-1 
+    flex-col items-center bg-dark-1 px-6 pb-10 pt-10 max-md:pb-32 sm:px-10;
   }
 
   /* Head Text */
@@ -34,7 +35,7 @@
 
   /* thread card  */
   .thread-card_bar {
-    @apply relative mt-2 w-0.5 grow rounded-full bg-neutral-800;
+    @apply relative mt-4 w-0.5 grow rounded-full bg-neutral-800;
   }
 
   .Post-thread-card_bar {
@@ -45,7 +46,8 @@
   }
   /* User card */
   .user-card {
-    @apply flex flex-col justify-between gap-4 max-xs:rounded-xl max-xs:bg-dark-3 max-xs:p-4 xs:flex-row xs:items-center;
+    @apply flex flex-col justify-between 
+    gap-4 max-xs:rounded-xl max-xs:bg-dark-3 max-xs:p-4 xs:flex-row xs:items-center;
   }
 
   .user-card_avatar {
@@ -53,7 +55,9 @@
   }
 
   .user-card_btn {
-    @apply h-auto min-w-[74px] rounded-lg bg-primary-500 text-[12px] text-light-1 !important;
+    @apply h-auto min-w-[74px] rounded-lg border-neutral-900 border-2
+    bg-black
+    text-[12px] text-light-1 !important;
   }
 
   .searchbar {
@@ -66,11 +70,12 @@
 
   .topbar {
     @apply fixed top-0 z-30 flex w-full items-center 
-    justify-between  bg-neutral-900 px-6 py-3 sm:hidden;
+    justify-between  bg-black border-neutral-900 border-b-2 px-6 py-3 sm:hidden;
   }
 
   .bottombar {
-    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-4 backdrop-blur-lg xs:px-7 md:hidden;
+    @apply fixed bottom-0 z-10 w-full rounded-t-3xl
+     bg-black p-4  xs:px-7 border-t-2 border-neutral-900 md:hidden;
   }
 
   .bottombar_container {
@@ -84,7 +89,7 @@
   .leftsidebar {
     @apply sticky left-0 top-0 z-20 flex h-screen w-fit 
     flex-col justify-between overflow-auto border-r
-     border-r-dark-4 bg-neutral-900 pb-5 pt-10 max-md:hidden;
+     border-r-dark-4 bg-black pb-5 pt-10 max-md:hidden;
   }
 
   .leftsidebar_link {
@@ -97,8 +102,8 @@
 
   .rightsidebar {
     @apply sticky right-0 top-0 z-20 flex h-screen w-fit 
-    flex-col justify-between gap-12 overflow-auto border-l border-l-dark-4
-    bg-neutral-900 px-10 pb-6 pt-28 max-xl:hidden;
+    flex-col justify-between gap-5 overflow-auto border-l border-l-dark-4
+    bg-black px-6 pb-6 pt-10 max-xl:hidden;
   }
 }
 
@@ -118,12 +123,12 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #5c5c7b;
+    background: #343435;
     border-radius: 50px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #7878a3;
+    background: #2b2b2b;
   }
 }
 
@@ -142,9 +147,15 @@
 
 /* Tab */
 .tab {
-  @apply flex min-h-[50px] flex-1 items-center gap-3  bg-neutral-900 text-light-2 data-[state=active]:bg-[#0e0e12] data-[state=active]:text-light-2 !important;
+  @apply flex min-h-[50px] 
+  flex-1 items-center gap-3 bg-black border-neutral-900 text-light-2 
+;
 }
-
+.tab2 {
+  @apply flex min-h-[50px] 
+  flex-1 items-center gap-3 bg-black border-neutral-400 text-neutral-700 rounded-xl
+  border-2 data-[state=active]:text-neutral-100 !important;
+}
 .no-focus {
   @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
 }

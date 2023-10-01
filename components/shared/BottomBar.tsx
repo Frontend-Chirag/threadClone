@@ -10,7 +10,7 @@ function BottomBar() {
     const pathName = usePathname();
 
     return(
-        <section className="bottombar  bg-zinc-800">
+        <section className="bottombar ">
           <div className="bottombar_container">
           {sidebarLinks.map((link) => {
                const isActive = (
@@ -22,7 +22,7 @@ function BottomBar() {
                    <Link 
                     href={link.route}
                     key={link.label}
-                     className={`bottombar_link ${isActive && 'bg-primary-500'}`}
+                     className={`bottombar_link ${isActive && 'bg-neutral-900'}`}
                     >
                         <Image
                           src={link.imgURL}
