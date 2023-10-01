@@ -1,10 +1,10 @@
 import CommunityCard from '@/components/cards/CommunityCard';
-import UserCard from '@/components/cards/UserCard';
 import { fetchCommunities } from '@/lib/actions/community.actions';
-import { fetchUser, fetchUsers } from '@/lib/actions/user.actions';
-import { currentUser } from '@clerk/nextjs'
+import { fetchUser, } from '@/lib/actions/user.actions';
+import { OrganizationSwitcher, currentUser } from '@clerk/nextjs'
 import { redirect } from 'next/navigation';
-import React from 'react'
+import { dark } from '@clerk/themes';
+
 
 const page = async () => {
 
@@ -25,9 +25,18 @@ const page = async () => {
  
   return (
     <section>
-        <h1 className='head-text mb-10'>Search</h1>
-
-        <div className='mt-14 flex flex-col gap-5'>
+        <h1 className='head-text mb-10'>Create Communities</h1>
+       
+       <div className='w-full flex mt-12 border-left  py-6 px-4 justify-between items-start'>
+        <OrganizationSwitcher
+              appearance={{
+                baseTheme: dark,
+                elements:{
+                  organizationSwitcherTrigger:'py-2 px-4'
+                }
+              }}
+            />
+        <div className='flex flex-col gap-5'>
           { result.communities.length === 0 
             ? (
               <p className='no-result'>No Users</p>
@@ -47,6 +56,7 @@ const page = async () => {
             )
           }
         </div>
+      </div>
     </section>
   )
 }

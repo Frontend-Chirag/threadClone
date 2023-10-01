@@ -68,7 +68,7 @@ function PostThread({ userId }: {userId: string}){
                  <FormLabel className='text-base=semibold text-white'>
                  Content
                  </FormLabel>
-                 <FormControl className="no-focus border border-dark-4 bg-dark-2 text-light-2">
+                 <FormControl className="no-focus border border-dark-4 bg-neutral-900 text-light-2">
                     <Textarea
                      rows={10}
                      {...field}

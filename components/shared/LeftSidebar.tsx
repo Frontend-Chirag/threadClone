@@ -15,6 +15,17 @@ function LeftSidebar() {
     return(
         <section className="custom-scrollbar leftsidebar">
           <div className="flex w-full flex-1 flex-col gap-3 px-6">
+          <Link href='/' className="flex items-center mb-10 gap-4">
+              <Image 
+                src='/logo.svg' 
+                alt='logo' 
+                width={28} 
+                height={28}
+              />
+              <p className="text-heading3-bold text-light-1 max-xs:hidden">
+                Threads
+              </p>
+          </Link>
             {sidebarLinks.map((link) => {
                const isActive = (
                 pathName.includes(link.route) && 
