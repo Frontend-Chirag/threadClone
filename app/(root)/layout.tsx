@@ -30,7 +30,7 @@ export default function RootLayout({
             <LeftSidebar/>
             
              <section className='main-container'>
-              <div className='w-full max-w-4xl'>
+              <div className='w-full max-w-4xl pt-20 sm:pt-0'>
                 {children}
               </div>
              </section>
