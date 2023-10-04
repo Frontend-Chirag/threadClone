@@ -30,7 +30,7 @@ interface Props {
 const ThreadCard = ({ id ,currentUserId ,parentId ,content ,author, image ,createdAt ,community ,comments, isComments}: Props) => {
   return (
     <article className={`flex flex-col w-full  ${isComments ?
-               'px-0 xs:px-7' :' border-t-2 border-neutral-900 p-7' }`}>
+               'px-0 xs:px-7' :' border-t-2 border-neutral-900 pt-7' }`}>
         <div className="flex  items-start justify-between">
             <div className="flex w-full flex-1 flex-row gap-4">
                 <div className='flex flex-col items-center'>

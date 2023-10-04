@@ -162,7 +162,7 @@ function PostThread({ userId , username, imgUrl }: Props ){
                     handleImage(e, field.onChange)}
                 />
               </FormControl>  
-              <div className={` w-full flex justify-center border-l-2 
+              <div className={` w-full flex justify-center border-l-2 sm:p-0 p-5 
                border-neutral-900  items-center ${field.value ? 'h-auto' : 'h-28'}`}>
                 { field.value && (
 
@@ -171,7 +171,7 @@ function PostThread({ userId , username, imgUrl }: Props ){
                   height={400}
                   src={field.value}
                   alt=" image"
-                  className="object-cover rounded-2"
+                  className="object-cover rounded-lg"
                   />
                   )
                 }  
