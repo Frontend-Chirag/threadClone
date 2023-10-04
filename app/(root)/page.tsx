@@ -30,6 +30,7 @@ export default async function Home() {
              createdAt={post.createdAt}
              community={post.community}
              comments={post.children}
+             image={post.image}
             />
           ))}
         </>

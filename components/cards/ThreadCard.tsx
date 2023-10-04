@@ -7,6 +7,7 @@ interface Props {
      currentUserId : string  ;
      parentId :  string | null ;
      content : string  ;
+     image: string;
      author : { 
          name: string, 
          image: string, 
@@ -26,9 +27,10 @@ interface Props {
      isComments?: boolean;
 }
 
-const ThreadCard = ({ id ,currentUserId ,parentId ,content ,author ,createdAt ,community ,comments, isComments}: Props) => {
+const ThreadCard = ({ id ,currentUserId ,parentId ,content ,author, image ,createdAt ,community ,comments, isComments}: Props) => {
   return (
-    <article className={`flex flex-col w-full  ${isComments ? 'px-0 xs:px-7' :' border-t-2 border-neutral-900 p-7' }`}>
+    <article className={`flex flex-col w-full  ${isComments ?
+               'px-0 xs:px-7' :' border-t-2 border-neutral-900 p-7' }`}>
         <div className="flex  items-start justify-between">
             <div className="flex w-full flex-1 flex-row gap-4">
                 <div className='flex flex-col items-center'>
@@ -43,6 +45,8 @@ const ThreadCard = ({ id ,currentUserId ,parentId ,content ,author ,createdAt ,c
                       className="cursor-pointer object-cover rounded-full"
                      />
                     </Link>
+                  
+                    
                     <div className='thread-card_bar'/>
                 </div>
 
@@ -57,6 +61,21 @@ const ThreadCard = ({ id ,currentUserId ,parentId ,content ,author ,createdAt ,c
                     </Link>
 
                     <p className='mt-2 text-small-regular text-light-2'>{content}</p>
+
+                    {image ? (
+                    <div className="w-full rounded-lg overflow-hidden mt-5 flex justify-center ite">
+
+                    <Image
+                       src={image}
+                       width={400}
+                       height={400}
+                       alt="image"
+                       className=" !w-full object-cover"
+                      />
+                    </div>
+                    ) : null
+                    
+                    } 
 
                     <div className={`${isComments && 'mb-10'} mt-5 flex flex-col gap-3`}>
                       <div className="flex gap-3.5">
