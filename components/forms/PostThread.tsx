@@ -113,7 +113,7 @@ function PostThread({ userId , username, imgUrl }: Props ){
               <FormItem className="mt-10 flex flex-1 relative items-start gap-3 w-full">
                <div className='flex flex-col w-full '>
                 <div className="flex w-full gap-5 " >
-                <div className="sm:w-[90px] sm:h-[80px] w-[80px] h-[60px] border-2 flex justify-center items-center rounded-full overflow-hidden">
+                <div className="sm:w-[90px] sm:h-[80px] w-[80px] h-[60px] flex justify-center items-center rounded-full overflow-hidden">
                      <Image
                       src={imgUrl}
                       alt="Profile image"
