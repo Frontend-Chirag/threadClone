@@ -73,7 +73,7 @@ function PostThread({ userId , username, imgUrl }: Props ){
   }
 
    const form = useForm({
-       resolver:   zodResolver(imageState ? ThreadValidation : ThreadValidationOnly),
+       resolver:  zodResolver(imageState ? ThreadValidation : ThreadValidationOnly),
        defaultValues:{
          thread:"",
          accountId: userId,
@@ -135,11 +135,11 @@ function PostThread({ userId , username, imgUrl }: Props ){
   return (
     <Form {...form}>
         <form  
-         className="flex flex-col w-full relative justify-start scrollnone  gap-2 items-end"
+         className="flex flex-col w-full relative  justify-start scrollnone overflow-hidden  gap-2 items-end"
          onSubmit={form.handleSubmit(onsubmit)}
          >
       {loadingState && (
-          <div className="loadingState -top-20"></div>
+          <div className="loadingState top-0 "></div>
        )}  
       
          <FormField 
