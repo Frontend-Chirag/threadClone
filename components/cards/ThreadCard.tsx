@@ -52,14 +52,6 @@ const ThreadCard = ({ id, currentUserId, parentId, content, author, image, creat
           </div>
 
           <div className='flex w-full flex-col relative'>
-            <div className="absolute right-5">
-              <DeleteThread
-                threadId={JSON.stringify(id)}
-                currentUserId={currentUserId}
-                authorId={author.id}
-                parentId={parentId}
-              />
-            </div>
             <Link
               href={`/profile/${author.id}`}
               className="w-fit"

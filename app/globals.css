@@ -5,6 +5,7 @@
 @layer components {
 
 
+  
 
   .loadingState {
     @apply animate-wiggle w-full h-[2px]  bg-gradient-to-r absolute from-purple-500 to-pink-500
