@@ -47,48 +47,116 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   return { posts, isNext };
 }
 
-interface Params {
-  text: string,
-  author: string,
-  communityId: string | null,
-  path: string,
-  image?: string,
-}
+  interface Params {
+    text: string,
+    author: string,
+    communityId: string | null,
+    path: string,
+    image?: string ,
+    imageState?:boolean
+  }
 
-export async function createThread({ text, author, communityId, path, image }: Params
-) {
-  try {
-    connectToDB();
+  export async function createThread({ text, author, communityId, path, image,imageState }: Params
+  ) {
+    try {
+      connectToDB();
 
-    const communityIdObject = await Community.findOne(
-      { id: communityId },
-      { _id: 1 }
-    );
-
-    const createdThread = await Thread.create({
-      text,
-      author,
-      community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
-      image:image ? image : null,
-    });
-
-    // Update User model
-    await User.findByIdAndUpdate(author, {
-      $push: { threads: createdThread._id },
-    });
-
-    if (communityIdObject) {
-      // Update Community model
-      await Community.findByIdAndUpdate(communityIdObject, {
+      const communityIdObject = await Community.findOne(
+        { id: communityId },
+        { _id: 1 }
+      );
+      
+      if(imageState){
+        const createdThread = await Thread.create({
+          text,
+          author,
+          community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
+          image: image ,
+        });
+           // Update User model
+      await User.findByIdAndUpdate(author, {
         $push: { threads: createdThread._id },
       });
-    }
 
-    revalidatePath(path);
-  } catch (error: any) {
-    throw new Error(`Failed to create thread: ${error.message}`);
+      if (communityIdObject) {
+        // Update Community model
+        await Community.findByIdAndUpdate(communityIdObject, {
+          $push: { threads: createdThread._id },
+        });
+      }
+      } else {
+        const createdThread = await Thread.create({
+          text,
+          author,
+          community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
+        });
+           // Update User model
+      await User.findByIdAndUpdate(author, {
+        $push: { threads: createdThread._id },
+      });
+
+      if (communityIdObject) {
+        // Update Community model
+        await Community.findByIdAndUpdate(communityIdObject, {
+          $push: { threads: createdThread._id },
+        });
+      }
+      }
+
+      revalidatePath(path);
+    
+
+    } catch (error: any) {
+      throw new Error(`Failed to create thread: ${error.message}`);
+    }
   }
-}
+
+
+
+  interface Params {
+    text: string,
+    author: string,
+    communityId: string | null,
+    path: string,
+  }
+
+  export async function onlyCreateThread({ text, author, communityId, path, }: Params
+  ) {
+    try {
+      connectToDB();
+
+      const communityIdObject = await Community.findOne(
+        { id: communityId },
+        { _id: 1 }
+      );
+
+      const createdThread = await Thread.create({
+        text,
+        author,
+        community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
+      });
+
+      // Update User model
+      await User.findByIdAndUpdate(author, {
+        $push: { threads: createdThread._id },
+      });
+
+      if (communityIdObject) {
+        // Update Community model
+        await Community.findByIdAndUpdate(communityIdObject, {
+          $push: { threads: createdThread._id },
+        });
+      }
+      
+      revalidatePath(path);
+    
+
+    } catch (error: any) {
+      throw new Error(`Failed to create thread: ${error.message}`);
+    }
+  }
+
+
 
 async function fetchAllChildThreads(threadId: string): Promise<any[]> {
   const childThreads = await Thread.find({ parentId: threadId });

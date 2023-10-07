@@ -1,17 +1,17 @@
 "use client"
 
-import { useForm } from "react-hook-form"
+import { Control, useForm, useFormContext } from "react-hook-form"
 import { zodResolver } from '@hookform/resolvers/zod';
 import { usePathname, useRouter } from "next/navigation";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Button } from "../ui/button";
-import { ThreadValidation } from "@/lib/validation/thread";
-import { createThread } from "@/lib/actions/thread.action";
+import { ThreadValidation, ThreadValidationOnly } from "@/lib/validation/thread";
+import { createThread, } from "@/lib/actions/thread.action";
 import { useOrganization } from "@clerk/nextjs";
 import { Input } from "../ui/input";
 import Image from "next/image";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState ,useEffect} from "react";
 import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
 
@@ -30,15 +30,21 @@ function PostThread({ userId , username, imgUrl }: Props ){
     const { organization } = useOrganization();
     const imageRef = useRef<HTMLInputElement>(null);
     const [ files, setFiles ] = useState<File[]>([]); 
+    const [ loadingState, setLoadingState ] = useState(false); 
+    const [ imageState, setImageState ] = useState(false); 
     const { startUpload } = useUploadThing("media");
-
+   
     
     const handleRef = () => {
       if(imageRef.current){
         imageRef.current.click();
+        setImageState(true)
       }
   
   }
+  useEffect(() => {
+   console.log(imageState)
+  },[imageState])
  
   const handleImage = (e: ChangeEvent<HTMLInputElement>,fieldChange: (value: string) => void) => {
    e.preventDefault();
@@ -51,6 +57,7 @@ function PostThread({ userId , username, imgUrl }: Props ){
      if (!file.type.includes("image")) return;
 
      setFiles(Array.from(e.target.files));
+   
  
      // Use onload event to set the result after the file has been read.
      fileReader.onload = (event) => {
@@ -65,50 +72,79 @@ function PostThread({ userId , username, imgUrl }: Props ){
    }
   }
 
+   const form = useForm({
+       resolver:   zodResolver(imageState ? ThreadValidation : ThreadValidationOnly),
+       defaultValues:{
+         thread:"",
+         accountId: userId,
+         image: ""
+       }
+   });
 
-    const form = useForm({
-        resolver: zodResolver(ThreadValidation),
-        defaultValues:{
-          thread:"",
-          accountId: userId,
-          image: ""
-        }
-    });
 
-    const onsubmit = async (values: z.infer<typeof ThreadValidation>) => {
-      const blob = values.image;
   
-      const hasImageChanged = isBase64Image(blob);
-      if (hasImageChanged) {
-        const imgRes = await startUpload(files);
-  
-        if (imgRes && imgRes[0].fileUrl) {
-          values.image = imgRes[0].fileUrl;
-        }
+
+    const onsubmit = async (values: z.infer<typeof  ThreadValidation | typeof ThreadValidationOnly> ) => {
+      console.log("create a thread");
+      setLoadingState(true)
+
+  // Dynamically select the validation schema based on imageState
+  const validationSchema = imageState ? ThreadValidation : ThreadValidationOnly;
+  const validatedValues = validationSchema.parse(values);
+
+  if (imageState  && 'image' in validatedValues && validatedValues.image !== undefined) {
+    // Only perform image-related logic if imageState is true
+    const blob = validatedValues.image as string;
+
+    const hasImageChanged = isBase64Image(blob);
+    if (hasImageChanged) {
+      const imgRes = await startUpload(files);
+
+      if (imgRes && imgRes[0].fileUrl) {
+        validatedValues.image = imgRes[0].fileUrl;
       }
-
-      await createThread({
-        text: values.thread ,
-        author: userId ,
-        communityId: organization ? organization.id : null ,
-        path: pathname ,
-        image: values.image
-       }) ;
-       
-       router.push('/')
-       
     }
+  }
+         
+      console.log("in the middle of creating thread")
+      if (imageState  && 'image' in validatedValues) {
+        await createThread({
+          text: values.thread,
+          author: userId,
+          communityId: organization ? organization.id : null,
+          path: pathname,
+          image: validatedValues.image as string,
+          imageState: imageState
+        });
+      } else{
+        await createThread({
+          text: values.thread,
+          author: userId,
+          communityId: organization ? organization.id : null,
+          path: pathname,
+        });
+      }
+      setLoadingState(false)
+      router.push('/');
+      console.log("thread created")
+    };
+    
 
-  return(
+   
+
+  return (
     <Form {...form}>
         <form  
-         className="flex flex-col justify-start gap-2 items-end"
+         className="flex flex-col w-full relative justify-start scrollnone  gap-2 items-end"
          onSubmit={form.handleSubmit(onsubmit)}
          >
-        
+      {loadingState && (
+          <div className="loadingState -top-20"></div>
+       )}  
+      
          <FormField 
-          control={form.control}
-          name="thread"
+      control={form.control  }
+          name="thread" 
           render={({ field }) => (
               <FormItem className="mt-10 flex flex-1 relative items-start gap-3 w-full">
                <div className='flex flex-col w-full '>
@@ -146,7 +182,7 @@ function PostThread({ userId , username, imgUrl }: Props ){
                 </div>
               </FormItem> 
           )}
-          />
+         />
            <FormField 
             control={form.control}
             name="image"
