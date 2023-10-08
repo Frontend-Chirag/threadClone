@@ -11,6 +11,9 @@ export default async function Home() {
   const result = await fetchPosts(1, 30);
 
   const user = await currentUser();
+
+  
+
   return (
     <>
      <h1 className="head-text text-left">
@@ -41,6 +44,7 @@ export default async function Home() {
              community={post.community}
              comments={post.children}
              image={post.image}
+             likes={post.likes}
              />
              </div>
           ))}

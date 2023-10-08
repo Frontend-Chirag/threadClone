@@ -11,6 +11,10 @@
     @apply animate-wiggle w-full h-[2px]  bg-gradient-to-r absolute from-purple-500 to-pink-500
   }
 
+  .likeButton {
+   @apply cursor-pointer animate-pop
+  }
+
   /* main */
   .main-container {
     @apply flex min-h-screen flex-1 
@@ -115,6 +119,11 @@
     bg-black px-6 pb-6 pt-10 max-xl:hidden;
   }
 }
+
+/* styles/LikeThread.module.css */
+
+
+
 
 @layer utilities {
   .css-invert {

@@ -84,7 +84,8 @@ function PostThread({ userId , username, imgUrl }: Props ){
 
   
 
-    const onsubmit = async (values: z.infer<typeof  ThreadValidation | typeof ThreadValidationOnly> ) => {
+    const onsubmit = async (values: z.infer<typeof  ThreadValidation | 
+      typeof ThreadValidationOnly> ) => {
       console.log("create a thread");
       setLoadingState(true)
 

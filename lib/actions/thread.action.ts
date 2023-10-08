@@ -5,6 +5,8 @@ import Thread from "../modals/thread.modal";
 import User from "../modals/user.model";
 import Community from "../modals/Community.model";
 import { connectToDB } from "../moongoose";
+import { Dispatch, SetStateAction } from "react";
+
 
 
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
@@ -31,7 +33,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
       populate: {
         path: "author", // Populate the author field within children
         model: User,
-        select: "_id name parentId image", // Select only _id and username fields of the author
+        select: "_id name parentId image likes", // Select only _id and username fields of the author
       },
     });
 
@@ -111,8 +113,66 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
     }
   }
 
+// like functionality 
+interface LikeThread {
+ userId: string,
+ threadId: string,
+}
 
 
+export async function likeThread({ userId, threadId }: LikeThread) {
+  try {
+    connectToDB();
+ // Check if the thread exists
+ const thread = await Thread.findById(threadId);
+ const users = await User.findOne({ id: userId });
+
+ const alreadyLikedIndex = thread.likes.some( async (user:any) =>
+  await user._id.toString() === users._id.toString());
+
+
+ if(alreadyLikedIndex) {
+
+  thread.likes.pull(users)
+  await thread.save();
+  console.log("DislikeThread successfully")
+ } else {
+
+  thread.likes.push(users);
+  
+  await thread.save();
+  console.log("Like thread successfully")
+}
+
+ return thread.likes.length;
+
+  } catch (error: any) {
+    console.error("Error in likeThread:", error);
+    throw new Error("Failed to like Thread: " + error.message);
+  }
+}
+
+
+interface checkInitialLike {
+  id: string ;
+  currentUserId: string;
+}
+
+export async function checkInitialLikeState({ id, currentUserId ,}: checkInitialLike){
+  try {
+      // Fetch information about whether the thread is already liked
+      const thread = await Thread.findById(id);
+      const users = await User.findOne({ id: currentUserId });
+
+      const alreadyLikedIndex = thread.likes.some(
+          (user: any) => user._id.toString() === users._id.toString()
+      );
+
+   return alreadyLikedIndex;
+  } catch (error) {
+      console.error("Error checking initial like state:", error);
+  }
+}
 
 async function fetchAllChildThreads(threadId: string): Promise<any[]> {
   const childThreads = await Thread.find({ parentId: threadId });
