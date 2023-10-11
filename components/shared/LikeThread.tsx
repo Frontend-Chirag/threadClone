@@ -10,14 +10,24 @@ interface Props {
     id: string;
     like: boolean;
     likecount: number;
+    popAnimation: boolean;
+    setPopAnimation: Dispatch<SetStateAction<boolean>>;
     setLike: Dispatch<SetStateAction<boolean>>;
     setLikeCount: Dispatch<SetStateAction<number>>;
 }
 
 
-const LikeThread = ({ currentUserId, id, like, likecount, setLike, setLikeCount  }: Props) => {
-
-    const [popAnimation, setPopAnimation] = useState(false);
+const LikeThread = ({ 
+   currentUserId, 
+   id, 
+   like, 
+   likecount,  
+   popAnimation, 
+   setPopAnimation, 
+   setLike, 
+   setLikeCount
+    
+}: Props) => {
 
     useEffect(() => {
         const checkInitialLike = async () => {

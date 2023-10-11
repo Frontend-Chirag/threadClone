@@ -23,6 +23,7 @@ const ImageThread = ({image, currentUserId, content , id, isComments, comments}:
 
     const [like, setLike] = useState(false);
     const [likecount , setLikeCount] = useState(0);
+    const [popAnimation, setPopAnimation] = useState(false);
 
   return (
     <>
@@ -34,7 +35,8 @@ const ImageThread = ({image, currentUserId, content , id, isComments, comments}:
                   image={image}
                   currentUserId={currentUserId}
                   id={id}
-                  like={like}
+                  popAnimation={popAnimation}
+                  setPopAnimation={setPopAnimation}
                   setLike={setLike}
                   setLikeCount={ setLikeCount}
                 />
@@ -51,6 +53,8 @@ const ImageThread = ({image, currentUserId, content , id, isComments, comments}:
                    id={id}
                    like={like}
                    likecount={likecount}
+                   popAnimation={popAnimation}
+                   setPopAnimation={setPopAnimation}
                    setLike={setLike}
                    setLikeCount={setLikeCount}
                 />

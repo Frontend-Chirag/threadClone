@@ -11,14 +11,24 @@ interface Props {
   image: string;
   currentUserId: string;
   id: string;
-  like: boolean;
+  popAnimation: boolean;
+  setPopAnimation: Dispatch<SetStateAction<boolean>>;
   setLike: Dispatch<SetStateAction<boolean>>;
   setLikeCount: Dispatch<SetStateAction<number>>;
+
 }
 
-const LoadingStateImage = ({ image, currentUserId, id, like, setLike, setLikeCount }: Props) => {
+const LoadingStateImage = ({ 
+  image, 
+  currentUserId, 
+  id, 
+  popAnimation, 
+  setPopAnimation, 
+  setLike, 
+  setLikeCount 
 
-  const [popAnimation, setPopAnimation] = useState(false);
+}: Props) => {
+
   const [loading, setloading] = useState(true);
   const [bigHeart, setBigHeart] = useState(false);
 
