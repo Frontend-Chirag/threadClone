@@ -1,20 +1,22 @@
 "use client";
 
 import { checkInitialLikeState, likeThread } from '@/lib/actions/thread.action';
-import React, { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 
 
 interface Props {
     currentUserId: string;
     id: string;
+    like: boolean;
+    likecount: number;
+    setLike: Dispatch<SetStateAction<boolean>>;
+    setLikeCount: Dispatch<SetStateAction<number>>;
 }
 
 
-const LikeThread = ({ currentUserId, id, }: Props) => {
+const LikeThread = ({ currentUserId, id, like, likecount, setLike, setLikeCount  }: Props) => {
 
-    const [like, setLike] = useState(false);
-    const [likecount , setLikeCount] = useState(0);
     const [popAnimation, setPopAnimation] = useState(false);
 
     useEffect(() => {
@@ -23,8 +25,14 @@ const LikeThread = ({ currentUserId, id, }: Props) => {
             id: id,
             currentUserId: currentUserId,
           });
-          setLike(isLiked);
+          const updatedLikeCount =  await likeThread({
+            userId: currentUserId,
+            threadId: id,
+        });
+         setLikeCount(updatedLikeCount)
+         setLike(isLiked);
         };
+        console.log(likecount, like)
     
         checkInitialLike();
       }, [currentUserId, id]);
@@ -56,7 +64,7 @@ const LikeThread = ({ currentUserId, id, }: Props) => {
                 <g id="pills" transform="translate(-116 -232)">
                   <g id="Group_150" data-name="Group 150">
                     <path id="Path_180" data-name="Path 180" 
-                    d="M164,247.762c-.092-.1-.184-.194-.276-.286A25.568,25.568,0,1,0,127.5,283.57c.1.1.2.2.316.3h0L164,320l36.224-36.093-.041-.041c.112-.092.214-.194.316-.3a25.568,25.568,0,1,0-36.223-36.094C164. 184,247.568,164.092,247.66,164,247.762Z" fill="none" 
+                    d="M164,247.762c-.092-.1-.184-.194-.276-.286A25.568,25.568,0,1,0,127.5,283.57c.1.1.2.2.316.3h0L164,320l36.224-36.093-.041-.041c.112-.092.214-.194.316-.3a25.568,25.568,0,1,0-36.223-36.094C164.184,247.568,164.092,247.66,164,247.762Z" fill="none" 
                     stroke="#58595b" strokeLinecap="round" strokeLinejoin="round" 
                     strokeWidth="4"/>
                   </g>
@@ -115,4 +123,4 @@ const LikeThread = ({ currentUserId, id, }: Props) => {
     )
 }
 
-export default LikeThread
+export default LikeThread;

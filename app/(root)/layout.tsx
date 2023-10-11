@@ -6,6 +6,7 @@ import TopBar from '@/components/shared/TopBar';
 import BottomBar from '@/components/shared/BottomBar';
 import RightSidebar from '@/components/shared/RightSidebar';
 import LeftSidebar from '@/components/shared/LeftSidebar';
+import { sidebarLinks } from '@/contants';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,10 +21,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
+  
   return (
     <ClerkProvider>
     <html lang="en">
-      <body className={`${inter.className} custom-scrollbar`}>
+      <body className={`${inter.className} custom-scrollbar`}> 
          <TopBar/>
 
           <main className='flex flex-row'>

@@ -32,7 +32,8 @@ function LeftSidebar() {
                 link.route.length > 1 || 
                 pathName === link.route
                 )
-                if(link.route === '/profile') link.route = `${link.route}/${userId}`
+                if(link.route === '/profile') link.route = 
+                `${link.route}/${userId}`
 
                return(
                    <Link 

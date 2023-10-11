@@ -217,13 +217,33 @@ module.exports = {
           '50%' : { transform: 'scale(0.8)' },
           '75%' :{  transform: 'scale(1.1)' },
           '100%' : { transform: 'scale(1)' }
+        },
+        fadeIn: {
+          from : {
+            opacity: '0',
+            transform: 'translateY(-20px)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'translateY(0)',
+          }
+        },
+        rotate: {
+          from: {
+            transform: 'rotate(0deg)',
+          },
+          to: {
+            transform: 'rotate(360deg)'
+          }
         }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         wiggle: 'wiggle 1s ease-in-out infinite',
-        pop: 'pop 1s ease-in-out 0.2s',
+        pop: 'pop ease-in-out 0.8s',
+        fadeIn: " fadeIn ease-in-out 1s forwards",
+        rotate: "rotate 4s infinite linear",
       },
     },
   },

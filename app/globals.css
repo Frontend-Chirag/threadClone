@@ -85,6 +85,7 @@
     @apply fixed top-0 z-30 flex w-full items-center 
     justify-between  bg-black border-neutral-900 border-b-2 px-6 py-3 sm:hidden;
   }
+ 
 
   .bottombar {
     @apply fixed bottom-0 z-10 w-full rounded-t-3xl
@@ -129,7 +130,13 @@
   .css-invert {
     @apply invert-[50%] brightness-200;
   }
- 
+  .glasseffect {
+    backdrop-filter: blur(10px) ;
+    -webkit-backdrop-filter: blur(10px) ;
+    background-color: rgba(255, 255, 255, 0.127);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
+  }
 
   .custom-scrollbar::-webkit-scrollbar {
     display: none;
@@ -177,6 +184,8 @@
 .account-form_input {
   @apply border border-dark-4 bg-dark-3 text-light-1 !important;
 }
+
+
 
 /* Comment Form */
 .comment-form {

@@ -1,11 +1,23 @@
+"use client";
+
+
 import Image from "next/image";
 import Link from "next/link";
 import {SignedIn, SignOutButton, OrganizationSwitcher} from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
+import { usePathname, useRouter } from "next/navigation";
 
-function TopBar() {
+const TopBar = () => {
+  
+
+  const pathname = usePathname();
+
+  // List of routes where you want to hide the TopBar
+  const shouldShowTopBar = pathname.includes('/profile');
+
+
     return (
-        <nav className="topbar items-center">
+        <nav className={`topbar items-center ${shouldShowTopBar && 'hidden'} `}>
           <Link href='/' className="flex items-center gap-4">
               <Image 
                 src='/logo.svg' 
@@ -19,14 +31,6 @@ function TopBar() {
           </Link>
 
           <div className="flex items-center gap-1">
-            <OrganizationSwitcher
-              appearance={{
-                baseTheme: dark,
-                  elements:{
-                      organizationSwitcherTrigger:'py-2 px-4'
-                  }
-              }}
-              />
              <div className="block md:hidden">
                <SignedIn>
                  <SignOutButton>
