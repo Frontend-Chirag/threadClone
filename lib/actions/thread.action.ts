@@ -185,9 +185,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
       }
     }
     if(alreadyLikedIndex) {
-  
-    return null
-
+    return thread.likes.length
     } else { 
     thread.likes.push(users);
     await thread.save();

@@ -28,14 +28,13 @@ const ImageThread = ({image, currentUserId, content , id, isComments, comments}:
     <>
     
     {image ? (
-              <div className="w-full h-[800px]  relative rounded-lg overflow-hidden mt-5 flex justify-center 
+              <div className="w-full h-auto  relative rounded-lg overflow-hidden mt-5 flex justify-center 
               ">
                 <LoadingStateImage
                   image={image}
                   currentUserId={currentUserId}
                   id={id}
                   like={like}
-                  likecount={ likecount}
                   setLike={setLike}
                   setLikeCount={ setLikeCount}
                 />
