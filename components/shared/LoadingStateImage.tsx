@@ -21,7 +21,7 @@ const LoadingStateImage = ({ image, currentUserId, id, like, likecount, setLike,
 
   const [popAnimation, setPopAnimation] = useState(false);
   const [loading, setloading] = useState(true);
-  const [bigHeart, setBigHeart] = useState(true);
+  const [bigHeart, setBigHeart] = useState(false);
 
   useEffect(() => {
     const checkInitialLike = async () => {
@@ -38,13 +38,13 @@ const LoadingStateImage = ({ image, currentUserId, id, like, likecount, setLike,
   const likeThreads = async () => {
     try {
       // Call the asynchronous function
-    // const likeThreadImage =  await likeThreadByImage({
-    //     userId: currentUserId,
-    //     threadId: id,
-    //   });
+    const likeThreadImage =  await likeThreadByImage({
+        userId: currentUserId,
+        threadId: id,
+      });
   
-    //   // Update state based on the result
-    //   setLikeCount(likeThreadImage)
+      // Update state based on the result
+      setLikeCount(likeThreadImage)
       setBigHeart(true)
       setPopAnimation(true);
   

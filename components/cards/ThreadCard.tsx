@@ -2,11 +2,7 @@
 import { formatDateString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import LikeThread from "../shared/LikeThread";
-import LoadingStateImage from "../shared/LoadingStateImage";
-import ImageThread from "../shared/imageThread";
-
-
+import ImageThread from "../shared/ImageThread";
 
 interface Props {
   id: string;
@@ -67,16 +63,15 @@ const ThreadCard = ({ id, currentUserId, parentId, content, author, image,
                 {author.name}
               </h4>
             </Link>
-
-            <ImageThread
-              image={image}
-              currentUserId={currentUserId}
-              id={id}
-              comments={comments}
-              isComments={isComments}
-              content={content}
-            />         
-
+      
+            <ImageThread      
+            image={image}
+            currentUserId={currentUserId}
+            id={id}
+            comments={comments}
+            isComments={isComments}
+            content={content}
+            />
            
           </div>
         </div>
