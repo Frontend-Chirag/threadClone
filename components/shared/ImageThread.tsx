@@ -4,10 +4,11 @@ import Link from "next/link";
 import LikeThread from "./LikeThread";
 import LoadingStateImage from "./LoadingStateImage";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { checkInitialLikeState, likeThread } from "@/lib/actions/thread.action";
 
 interface Props{
-    image:string;
+    image?:string;
     currentUserId:string;
     id:string;
     isComments?:boolean;
@@ -24,6 +25,24 @@ const ImageThread = ({image, currentUserId, content , id, isComments, comments}:
     const [like, setLike] = useState(false);
     const [likecount , setLikeCount] = useState(0);
     const [popAnimation, setPopAnimation] = useState(false);
+
+    useEffect(() => {
+      const checkInitialLike = async () => {
+        const isLiked = await checkInitialLikeState({
+          id: id,
+          currentUserId: currentUserId,
+        });
+        const updatedLikeCount =  await likeThread({
+          userId: currentUserId,
+          threadId: id,
+      });
+       setLikeCount(updatedLikeCount)
+       setLike(isLiked);
+      };
+      console.log(likecount, like)
+  
+      checkInitialLike();
+    }, [currentUserId, id, ]);
 
   return (
     <>

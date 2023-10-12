@@ -31,6 +31,7 @@ const Page = async ({params} : {params: {id: string}}) => {
              createdAt={thread.createdAt}
              community={thread.community}
              comments={thread.children}
+             image={thread.image}
         />
         </div>
         

@@ -49,33 +49,33 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
   return { posts, isNext };
 }
 
-  interface Params {
-    text: string,
-    author: string,
-    communityId: string | null,
-    path: string,
-    image?: string ,
-    imageState?:boolean
-  }
+interface Params {
+  text: string,
+  author: string,
+  communityId: string | null,
+  path: string,
+  image?: string,
+  imageState?: boolean
+}
 
-  export async function createThread({ text, author, communityId, path, image,imageState }: Params
-  ) {
-    try {
-      connectToDB();
+export async function createThread({ text, author, communityId, path, image, imageState }: Params
+) {
+  try {
+    connectToDB();
 
-      const communityIdObject = await Community.findOne(
-        { id: communityId },
-        { _id: 1 }
-      );
-      
-      if(imageState){
-        const createdThread = await Thread.create({
-          text,
-          author,
-          community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
-          image: image ,
-        });
-           // Update User model
+    const communityIdObject = await Community.findOne(
+      { id: communityId },
+      { _id: 1 }
+    );
+
+    if (imageState) {
+      const createdThread = await Thread.create({
+        text,
+        author,
+        community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
+        image: image,
+      });
+      // Update User model
       await User.findByIdAndUpdate(author, {
         $push: { threads: createdThread._id },
       });
@@ -86,95 +86,46 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
           $push: { threads: createdThread._id },
         });
       }
-      } else {
-        const createdThread = await Thread.create({
-          text,
-          author,
-          community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
-        });
-           // Update User model
-      await User.findByIdAndUpdate(author, {
-        $push: { threads: createdThread._id },
-      });
-
-      if (communityIdObject) {
-        // Update Community model
-        await Community.findByIdAndUpdate(communityIdObject, {
-          $push: { threads: createdThread._id },
-        });
-      }
-      }
-
-      revalidatePath(path);
-    
-
-    } catch (error: any) {
-      throw new Error(`Failed to create thread: ${error.message}`);
-    }
-  }
-  // like functionality 
-  interface LikeThread {
-    userId: string,
-    threadId: string,
-  }
-  
-  export async function likeThread({ userId, threadId }: LikeThread) {
-    try {
-      connectToDB();
-    // Check if the thread exists
-    const thread = await Thread.findById(threadId);
-    const users = await User.findOne({ id: userId });
-  
-    let alreadyLikedIndex = false;
-
-    // Use a for...of loop for asynchronous checks
-    for (const user of thread.likes) {
-      if (user._id.toString() === users._id.toString()) {
-        alreadyLikedIndex = true;
-        break;
-      }
-    }
-  
-  
-    if(alreadyLikedIndex) {
-  
-    thread.likes.pull(users)
-    await thread.save();
-    console.log("DislikeThread successfully")
     } else {
-  
-    thread.likes.push(users);
-    
-    await thread.save();
-    console.log("Like thread successfully")
-  }
-  
-    return thread.likes.length;
-  
-    } catch (error: any) {
-      console.error("Error in likeThread:", error);
-      throw new Error("Failed to like Thread: " + error.message);
-    }
-  }
-  
-  interface checkInitialLike {
-    id: string ;
-    currentUserId: string;
-  }
+      const createdThread = await Thread.create({
+        text,
+        author,
+        community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
+      });
+      // Update User model
+      await User.findByIdAndUpdate(author, {
+        $push: { threads: createdThread._id },
+      });
 
-  // like functionality 
-  interface LikeThreadimage {
-    userId: string,
-    threadId: string,
+      if (communityIdObject) {
+        // Update Community model
+        await Community.findByIdAndUpdate(communityIdObject, {
+          $push: { threads: createdThread._id },
+        });
+      }
+    }
+
+    revalidatePath(path);
+
+
+  } catch (error: any) {
+    throw new Error(`Failed to create thread: ${error.message}`);
   }
-  
-  export async function likeThreadByImage({ userId, threadId }: LikeThreadimage) {
-    try {
-      connectToDB();
+}
+// like functionality 
+interface LikeThread {
+  userId: string,
+  threadId: string,
+  likebyimage?: boolean;
+}
+
+export async function likeThread({ userId, threadId, likebyimage }: LikeThread) {
+  try {
+    connectToDB();
     // Check if the thread exists
     const thread = await Thread.findById(threadId);
     const users = await User.findOne({ id: userId });
-  
+
     let alreadyLikedIndex = false;
 
     // Use a for...of loop for asynchronous checks
@@ -184,36 +135,67 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
         break;
       }
     }
-    if(alreadyLikedIndex) {
-    return thread.likes.length
-    } else { 
-    thread.likes.push(users);
-    await thread.save();
-    console.log("Like thread by image")
-  }
+
+    if (likebyimage === false) {
+      if (alreadyLikedIndex) {
+
+        return thread.likes.length;
+      } else {
+
+        thread.likes.push(users);
+        await thread.save();
+        console.log("Like thread By Image successfully")
+      }
+
+    } else {
+
+      if (alreadyLikedIndex) {
+        thread.likes.pull(users)
+        await thread.save();
+        console.log("DislikeThread successfully")
+      } else {
+
+        thread.likes.push(users);
+
+        await thread.save();
+        console.log("Like thread successfully")
+      }
+    }
     return thread.likes.length;
-    } catch (error: any) {
-      console.error("Error in likeThread:", error);
-      throw new Error("Failed to like Thread: " + error.message);
-    }
+
+  } catch (error: any) {
+    console.log("Error in likeThread || :", error);
+
   }
-  
-  
-  export async function checkInitialLikeState({ id, currentUserId }: checkInitialLike){
-    try {
-        // Fetch information about whether the thread is already liked
-        const thread = await Thread.findById(id);
-        const users = await User.findOne({ id: currentUserId });
-  
-        const alreadyLikedIndex = thread.likes.some(
-            (user: any) => user._id.toString() === users._id.toString()
-        );
-  
-      return alreadyLikedIndex;
-    } catch (error) {
-        console.error("Error checking initial like state:", error);
-    }
+}
+
+interface checkInitialLike {
+  id: string;
+  currentUserId: string;
+}
+
+// like functionality 
+interface LikeThreadimage {
+  userId: string,
+  threadId: string,
+}
+
+
+export async function checkInitialLikeState({ id, currentUserId }: checkInitialLike) {
+  try {
+    // Fetch information about whether the thread is already liked
+    const thread = await Thread.findById(id);
+    const users = await User.findOne({ id: currentUserId });
+
+    const alreadyLikedIndex = thread.likes.some(
+      (user: any) => user._id.toString() === users._id.toString()
+    );
+
+    return alreadyLikedIndex;
+  } catch (error) {
+    console.error("Error checking initial like state:", error);
   }
+}
 
 
 async function fetchAllChildThreads(threadId: string): Promise<any[]> {
@@ -327,14 +309,14 @@ export async function fetchThreadById(threadId: string) {
   }
 }
 
-interface PropsComment{
-  threadId: string ;
-  commentText: string ;
-  userId: string ;
-  path: string ;
+interface PropsComment {
+  threadId: string;
+  commentText: string;
+  userId: string;
+  path: string;
 }
 
-export async function addCommentToThread({ threadId, commentText, userId, path } : PropsComment ) {
+export async function addCommentToThread({ threadId, commentText, userId, path }: PropsComment) {
   connectToDB();
 
   try {

@@ -2,7 +2,7 @@
 
 
 
-import { checkInitialLikeState, likeThreadByImage } from '@/lib/actions/thread.action';
+import { checkInitialLikeState, likeThread, } from '@/lib/actions/thread.action';
 import Image from 'next/image';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
@@ -31,27 +31,16 @@ const LoadingStateImage = ({
 
   const [loading, setloading] = useState(true);
   const [bigHeart, setBigHeart] = useState(false);
-
-  useEffect(() => {
-    const checkInitialLike = async () => {
-
-      const isLiked = await checkInitialLikeState({
-        id: id,
-        currentUserId: currentUserId,
-      });
-      setLike(isLiked);
-    };
-
-    checkInitialLike();
-  }, [currentUserId, id]);
+  const likebyimage = false; 
 
   const likeThreads = async () => {
     try {
       setLike(true);
       // Call the asynchronous function
-      const likeThreadImage = await likeThreadByImage({
+      const likeThreadImage = await likeThread({
         userId: currentUserId,
         threadId: id,
+        likebyimage: likebyimage,
       });
 
       // Update state based on the result

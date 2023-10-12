@@ -26,29 +26,13 @@ const LikeThread = ({
    setPopAnimation, 
    setLike, 
    setLikeCount
-    
+
 }: Props) => {
 
-    useEffect(() => {
-        const checkInitialLike = async () => {
-          const isLiked = await checkInitialLikeState({
-            id: id,
-            currentUserId: currentUserId,
-          });
-          const updatedLikeCount =  await likeThread({
-            userId: currentUserId,
-            threadId: id,
-        });
-         setLikeCount(updatedLikeCount)
-         setLike(isLiked);
-        };
-        console.log(likecount, like)
-    
-        checkInitialLike();
-      }, [currentUserId, id]);
+
 
     const likeThreads = async () => {
-        console.log("Like button clicked");
+      
       const updatedLikeCount =  await likeThread({
             userId: currentUserId,
             threadId: id,

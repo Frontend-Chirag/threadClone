@@ -9,7 +9,7 @@ interface Props {
   currentUserId: string;
   parentId: string | null;
   content: string;
-  image: string;
+  image?: string;
   author: {
     name: string,
     image: string,
